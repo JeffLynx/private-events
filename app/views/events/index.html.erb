@@ -9,9 +9,17 @@
   <%= link_to "Sign in", new_user_session_path %>
 <% end %>
 
+<% visible_events =
+  if user_signed_in?
+    Event.publicly_visible.or(Event.where(creator: current_user))
+  else
+    Event.publicly_visible
+  end
+%>
+
 <h1>Upcoming</h1>
 <ul>
-  <% Event.upcoming.each do |event| %>
+  <% visible_events.upcoming.each do |event| %>
     <li>
       <%= link_to event.title, event %> – <%= event.date %>
     </li>
@@ -20,7 +28,7 @@
 
 <h1>Past</h1>
 <ul>
-  <% Event.past.each do |event| %>
+  <% visible_events.past.each do |event| %>
     <li>
       <%= link_to event.title, event %> – <%= event.date %>
     </li>

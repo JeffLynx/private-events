@@ -9,11 +9,12 @@ class Event < ApplicationRecord
     through: :event_attendances,
     source: :attendee
 
-  scope :past, -> { where("date < ?", Time.current) }
-  scope :upcoming, -> { where("date >= ?", Time.current) }
-
   has_many :event_invitations, dependent: :destroy
   has_many :invited_users,
     through: :event_invitations,
     source: :invited_user
+
+  scope :past, -> { where("date < ?", Time.current) }
+  scope :upcoming, -> { where("date >= ?", Time.current) }
+  scope :publicly_visible, -> { where(private: false) }
 end
