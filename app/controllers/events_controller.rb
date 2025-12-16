@@ -21,6 +21,15 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+
+    if @event.private?
+      allowed_users = @event.attendees +
+        @event.invited_users +
+        [ @event.creator ]
+      unless allowed_users.include?(current_user)
+        redirect_to events_path, alert: "You are not authorized to view this event."
+      end
+    end
   end
 
   private

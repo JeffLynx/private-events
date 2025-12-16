@@ -13,4 +13,12 @@ class User < ApplicationRecord
   has_many :attended_events,
     through: :event_attendances,
     source: :attended_event
+
+  has_many :event_invitations,
+    foreign_key: :invited_user_id,
+    dependent: :destroy
+
+  has_many :invited_events,
+    through: :event_invitations,
+    source: :event
 end

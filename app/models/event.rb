@@ -11,4 +11,9 @@ class Event < ApplicationRecord
 
   scope :past, -> { where("date < ?", Time.current) }
   scope :upcoming, -> { where("date >= ?", Time.current) }
+
+  has_many :event_invitations, dependent: :destroy
+  has_many :invited_users,
+    through: :event_invitations,
+    source: :invited_user
 end
