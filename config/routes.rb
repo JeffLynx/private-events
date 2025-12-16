@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :events, only: [ :index, :new, :create, :show ]
   resources :users, only: [ :show ]
 
+  resources :event_attendances, only: [ :create ]
+
   get "events/index"
 
   get "up" => "rails/health#show", as: :rails_health_check

@@ -9,8 +9,20 @@
   <%= link_to "Sign in", new_user_session_path %>
 <% end %>
 
+<h1>Upcoming</h1>
 <ul>
-  <% @events.each do |event| %>
-    <li><%= event.title %></li>
+  <% Event.upcoming.each do |event| %>
+    <li>
+      <%= link_to event.title, event %> – <%= event.date %>
+    </li>
   <% end %>
 </ul>
+
+<h1>Past</h1>
+<ul>
+  <% Event.past.each do |event| %>
+    <li>
+      <%= link_to event.title, event %> – <%= event.date %>
+    </li>
+  <% end %>
+</ul> 

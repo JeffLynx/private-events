@@ -24,6 +24,22 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to "Events", events_path %>
+
+      <% if user_signed_in? %>
+    |   <%= link_to "My Profile", user_path(current_user) %>
+    |   <%= link_to "New Event", new_event_path %>
+    |   <%= link_to "Sign out",
+          destroy_user_session_path,
+          data: { turbo_method: :delete } %>
+      <% else %>
+    |   <%= link_to "Sign up", new_user_registration_path %>
+    |   <%= link_to "Sign in", new_user_session_path %>
+      <% end %>
+    </nav>
+
+    <hr>
     <%= yield %>
   </body>
 </html>
